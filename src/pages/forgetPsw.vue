@@ -150,28 +150,34 @@ export default {
     sendSms:function(){
       var that = this;
       if((/^1[34578]\d{9}$/.test(this.phone))){
-        that.sendAuthCode = false;
-        that.auth_time = 60;
-        var auth_timetimer =  setInterval(()=>{
-            that.auth_time--;
-            if(that.auth_time<=0){
-                that.sendAuthCode = true;
-                clearInterval(auth_timetimer);
-            }
-        }, 1000);
-        var data = {
+        let data = {
           'phone':that.phone
         }
-        that.$request.post('user/sendSms',data,that.token).then(function(res) {
-          console.log(res)
-          if(res.data.success == '发送成功'){
-            that.msgColor = true
-            that.codeMsg = '短信发送成功';
+        that.$request.post('user/exitByPhone',data,that.token).then(function(res) {
+          if(res.data.success == '校验成功'){
+            that.sendAuthCode = false;
+            that.auth_time = 60;
+            var auth_timetimer =  setInterval(()=>{
+                that.auth_time--;
+                if(that.auth_time<=0){
+                    that.sendAuthCode = true;
+                    clearInterval(auth_timetimer);
+                }
+            }, 1000);
+            that.$request.post('user/sendSms',data,that.token).then(function(res) {
+              console.log(res)
+              if(res.data.success == '发送成功'){
+                that.msgColor = true
+                that.codeMsg = '短信发送成功';
+              }
+            }).catch(function(error) {
+                that.msgColor = false
+                that.codeMsg = '短信发送失败';
+            });
+          }else{
+            that.codeMsg = '手机号未注册';
           }
-        }).catch(function(error) {
-            that.msgColor = false
-            that.codeMsg = '短信发送失败';
-        });
+        }); 
       }else{
         that.phoneShow = true;
       }

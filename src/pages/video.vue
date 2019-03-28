@@ -10,9 +10,11 @@
 			</div>
 			<div class="video-content">
 				<div class="video-list" v-for="item in videoList">
-					<img :src="item.image"/>
-					<p>{{item.name}}</p>
-					<img src="../../static/images/play.png"/>
+					<!-- <img :src="item.image"/> -->
+					<video :src="item.filePath" controls="controls" style="width:300px;height:214px">
+					</video>
+					<p>{{item.mediaName}}</p>
+					<!-- <img src="../../static/images/play.png"/> -->
 				</div>
 			</div>
 		</div>
@@ -27,19 +29,41 @@
 		data() {
 			return {
 				headerBg: 'headerBg',
-				videoList:[{image:'../../static/images/v1.png',name:'创投实战商学院开学典礼'},{image:'../../static/images/v2.png',name:'江海天空2019战略发布会'},{image:'../../static/images/v3.png',name:'江海天空2019年会直播'},{image:'../../static/images/v1.png',name:'创投实战商学院开学典礼'},{image:'../../static/images/v2.png',name:'江海天空2019战略发布会'},{image:'../../static/images/v3.png',name:'江海天空2019年会直播'}]
+				currentPage:1,
+				pageSize : 10,
+				videoList:[
+					// {image:'../../static/images/v1.png',name:'创投实战商学院开学典礼'},
+					// {image:'../../static/images/v2.png',name:'江海天空2019战略发布会'},
+					// {image:'../../static/images/v3.png',name:'江海天空2019年会直播'},
+					// {image:'../../static/images/v1.png',name:'创投实战商学院开学典礼'},
+					// {image:'../../static/images/v2.png',name:'江海天空2019战略发布会'},
+					// {image:'../../static/images/v3.png',name:'江海天空2019年会直播'}
+					]
 			}
 			
 		},
 		created() {
-
+				this.queryData();
 		},
 		components: {
 			towtop,
 			towbottom
 		},
 		methods: {
-			
+			queryData(){
+				var that = this;
+				var data = {
+					curPage  : that.currentPage,
+					pageSize : that.pageSize
+				}
+				that.$request.post("media/query",data,that.token).then(function(result){
+					console.log(result) 
+					if(result.data.success == "媒体查询成功"){
+						that.videoList = result.data.list
+						console.log(that.adminList,'赋值之后的that.adminList')
+					}
+				})
+			}
 		},
 
 	}

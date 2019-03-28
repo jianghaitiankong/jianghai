@@ -229,6 +229,7 @@ import { throws } from 'assert';
 				that.HoverIndex = 6;
 				that.business = '../../static/images/businessIcon' + index + '.png'
 			},
+			//获取背景图片
 			backgroundImg(){
 				var that = this;
 				var data = { }
