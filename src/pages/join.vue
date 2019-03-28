@@ -15,7 +15,7 @@
 		</p>
 		<div class="recruit wow fadeInUp animated">
 			<h5>招聘信息</h5>
-			<ul>
+			<ul> 
 				<li @click="tab(index,item)" v-for="(item,index) in JobList">
 					<div class="joinH4" :class="index==curId?'bgA':'bgB' ">
 						<span class="joinName ellipsis">{{item.hiring}}</span>
