@@ -8,13 +8,14 @@
 			<div class="bannerContent">
 				<img src="../../static/images/bannerText.png" />
 			</div>
-			<img src="../../static/images/down.png" />
+			<a href="#gotu" id="gotu" style=" position: initial; z-index: 11;"><img src="../../static/images/down.png" /></a>
 			<div class="starsContent">
 				<div id='stars'></div>
 				<div id='stars2'></div>
 				<div id='stars3'></div>
 			</div>
 		</div>
+		<div></div>
 		<div class="kbox1Bg">
 			<div class="container">
 				<div class="box1Top wow fadeInUp animated first-recognize" data-wow-delay="0.5s">
@@ -100,170 +101,170 @@
 </template>
 
 <script>
-	import towtop from '@/components/testTop'
-	import towbottom from '@/components/testBottom'
-import { throws } from 'assert';
-	export default {
-		data() {
-			return {
-				desc:'',
-				HoverIndex: 6,
-				headerBg: 'newHeaderBg',
-				imgUrl: '../../static/images/Wlogo.png',
-				mediaTitle: "媒体中心",
-				mediaTitleEng: 'Media Center',
-				bussinessTitle: '江海业务',
-				bussinessTitleEng: 'UVC Business',
-				productTitle: '江海产品',
-				productTitleEng: 'UVC Products',
-				businessList: [],
-				businessHover: '',
-				productList: [],
-				bannerImgUrl : '',
-				mediaImgUrl : '',
-				productsImgUrl : '',
-				token: sessionStorage.getItem("token"),
-			}
-		},
-		created() {
-			this.getBusinessData();
-			this.getproductData();
-			this.getAbout();
-			this.backgroundImg();
-		},
-		mounted() {
-			window.addEventListener('scroll', this.handleScroll)
-		},
-		components: {
-			towtop,
-			towbottom
-		},
-		methods: {
-			//改变菜单栏样式
-			handleScroll() {
-				var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-				if(scrollTop > 600) {
-					this.headerBg = 'headerBg'
-					this.imgUrl = '../../static/images/logo.png'
-				} else {
-					this.headerBg = 'newHeaderBg'
-					this.imgUrl = '../../static/images/Wlogo.png'
-				}
-			},
-			//获取关于我们
-			getAbout() {
-				var about = {}
-				this.$request.post("aboutMe/selectAboutUs", about, this.token).then(res => {
-					this.desc=res.data.list[0].aboutUs
-				}).catch(err => {
+import towtop from '@/components/testTop'
+import towbottom from '@/components/testBottom'
+import { throws } from 'assert'
+export default {
+  data () {
+    return {
+      desc: '',
+      HoverIndex: 6,
+      headerBg: 'newHeaderBg',
+      imgUrl: '../../static/images/Wlogo.png',
+      mediaTitle: '媒体中心',
+      mediaTitleEng: 'Media Center',
+      bussinessTitle: '江海业务',
+      bussinessTitleEng: 'UVC Business',
+      productTitle: '江海产品',
+      productTitleEng: 'UVC Products',
+      businessList: [],
+      businessHover: '',
+      productList: [],
+      bannerImgUrl: '',
+      mediaImgUrl: '',
+      productsImgUrl: '',
+      token: sessionStorage.getItem('token')
+    }
+  },
+  created () {
+    this.getBusinessData()
+    this.getproductData()
+    this.getAbout()
+    this.backgroundImg()
+  },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  components: {
+    towtop,
+    towbottom
+  },
+  methods: {
+    // 改变菜单栏样式
+    handleScroll () {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      if (scrollTop > 600) {
+        this.headerBg = 'headerBg'
+        this.imgUrl = '../../static/images/logo.png'
+      } else {
+        this.headerBg = 'newHeaderBg'
+        this.imgUrl = '../../static/images/Wlogo.png'
+      }
+    },
+    // 获取关于我们
+    getAbout () {
+      var about = {}
+      this.$request.post('aboutMe/selectAboutUs', about, this.token).then(res => {
+        this.desc = res.data.list[0].aboutUs
+      }).catch(err => {
+        console.log(error)
+      })
+    },
+    // 获取业务列表
+    getBusinessData () {
+      var that = this
+      var data = {
+        'curPage': 1,
+        'pageSize': 10
+      }
+      this.$request.post('bus/selectAllBus', data, that.token).then(res => {
+        var Busdata = res.data.list
+        for (let i in Busdata) {
+          Busdata[i].businessImg = '../../static/images/businessIcon' + i + '.png'
+        }
+        that.businessList = Busdata
+      }).catch(err => {
+        console.log(error)
+      })
+    },
+    // 业务跳转带参
+    BusJumpLink (index) {
+      var that = this
+      that.$router.push({
+        path: '/business',
+        query: {
+          id: that.businessList[index].businessId,
+          title: that.businessList[index].business,
+          engTitle: that.businessList[index].businessEng,
+          content: that.businessList[index].businessCon
+        }
+      })
+    },
+    // 获取产品列表
+    getproductData () {
+      var that = this
+      var data = {
+        'curPage': 1,
+        'pageSize': 10
+      }
+      this.$request.post('product/selectAllProduct', data, that.token).then(res => {
+        var Prodata = res.data.list
+        for (let i in Prodata) {
+          Prodata[i].productImg = '../../static/images/productIcon' + i + '.png'
+        }
+        that.productList = Prodata
+      }).catch(err => {
+        console.log(error)
+      })
+    },
+    // 产品跳转带参
+    ProJumpLink (index) {
+      var that = this
+      that.$router.push({
+        path: '/product',
+        query: {
+          id: that.productList[index].productId,
+          title: that.productList[index].product,
+          engTitle: that.productList[index].productEng
+        }
+      })
+    },
+    onMouseOver (index) {
+      var that = this
+      that.HoverIndex = index
+      that.businessHover = '../../static/images/businessHover' + index + '.png'
+    },
+    onMouseLeave (index) {
+      var that = this
+      that.HoverIndex = 6
+      that.business = '../../static/images/businessIcon' + index + '.png'
+    },
+    backgroundImg () {
+      var that = this
+      var data = { }
+      that.$request.post('file/homePage/query', data, that.token).then(res => {
+        console.log(res.data.list)
+        that.bannerImgUrl = 'http://47.105.89.34:7005/officialWeb-service/file/download?filePath=' + res.data.list[2].picturePath
+        that.mediaImgUrl = 'http://47.105.89.34:7005/officialWeb-service/file/download?filePath=' + res.data.list[1].picturePath
+        that.productsImgUrl = 'http://47.105.89.34:7005/officialWeb-service/file/download?filePath=' + res.data.list[0].picturePath
+        // console.log(that.bannerImgUrl)
+        // console.log(that.mediaImgUrl)
+        // console.log(that.productsImgUrl)
+      }).catch(err => {
+        console.log(error)
+      })
+    }
+  }
 
-					console.log(error)
-				});
-			},
-			//获取业务列表
-			getBusinessData() {
-				var that = this;
-				var data = {
-					'curPage': 1,
-					'pageSize': 10,
-				}
-				this.$request.post('bus/selectAllBus', data, that.token).then(res => {
-					var Busdata = res.data.list;
-					for(let i in Busdata) {
-						Busdata[i].businessImg = '../../static/images/businessIcon' + i + '.png'
-					}
-					that.businessList = Busdata;
-				}).catch(err => {
-					console.log(error)
-				});
-			},
-			//业务跳转带参
-			BusJumpLink(index) {
-				var that = this;
-				that.$router.push({
-					path: '/business',
-					query: {
-						id: that.businessList[index].businessId,
-						title: that.businessList[index].business,
-						engTitle: that.businessList[index].businessEng,
-						content: that.businessList[index].businessCon
-					}
-				})
-			},
-			//获取产品列表
-			getproductData() {
-				var that = this;
-				var data = {
-					'curPage': 1,
-					'pageSize': 10,
-				}
-				this.$request.post('product/selectAllProduct', data, that.token).then(res => {
-					var Prodata = res.data.list
-					for(let i in Prodata) {
-						Prodata[i].productImg = '../../static/images/productIcon' + i + '.png'
-					}
-					that.productList = Prodata;
-				}).catch(err => {
-					console.log(error)
-				});
-			},
-			//产品跳转带参
-			ProJumpLink(index) {
-				var that = this;
-				that.$router.push({
-					path: '/product',
-					query: {
-						id: that.productList[index].productId,
-						title: that.productList[index].product,
-						engTitle: that.productList[index].productEng,
-					}
-				})
-			},
-			onMouseOver(index) {
-				var that = this;
-				that.HoverIndex = index;
-				that.businessHover = '../../static/images/businessHover' + index + '.png'
-			},
-			onMouseLeave(index) {
-				var that = this;
-				that.HoverIndex = 6;
-				that.business = '../../static/images/businessIcon' + index + '.png'
-			},
-			//获取背景图片
-			backgroundImg(){
-				var that = this;
-				var data = { }
-				that.$request.post('file/homePage/query', data, that.token).then(res => {
-						console.log(res.data.list)
-						that.bannerImgUrl = 'http://47.105.89.34:7005/officialWeb-service/file/download?filePath='+res.data.list[2].picturePath
-						that.mediaImgUrl = 'http://47.105.89.34:7005/officialWeb-service/file/download?filePath='+ res.data.list[1].picturePath
-						that.productsImgUrl ='http://47.105.89.34:7005/officialWeb-service/file/download?filePath='+ res.data.list[0].picturePath;
-						// console.log(that.bannerImgUrl)
-						// console.log(that.mediaImgUrl)
-						// console.log(that.productsImgUrl)
-				}).catch(err => {
-					console.log(error)
-				});
-			
-			}
-		},
-
-	}
+}
 </script>
 
 <style scoped>
+.starsContent{
+	z-index: 1;
+}
 	nav.navbar.bootsnav ul.nav>li>a:hover {
 		color: #0546b4 !important;
 	}
-	
+
 	.kbox1Bg .box1Top {
 		padding: 30px 0;
 	}
-	
+
 	.kbox3Bg .box1Top {
 		padding: 0;
 	}
-	
+
 	.banBtn:after {
 		display: block;
 		content: "";
@@ -279,26 +280,26 @@ import { throws } from 'assert';
 		background-size: cover;
 		animation: flash 3s infinite;
 	}
-	
+
 	.box1Bg h3,
 	.box1Bg p {
 		writing-mode: vertical-rl;
 		writing-mode: tb-rl;
 		float: right;
 	}
-	
+
 	.first-recognize {
 		width: 875px;
 		height: 350px;
 		margin: 0 auto;
 	}
-	
+
 	.kbox1Bg {
 		box-sizing: border-box;
 		padding-top: 30px;
 		background: url(../../static/images/background4.png);
 	}
-	
+
 	.kbox1Bg p {
 		text-indent: 2em;
 		line-height: 29px;
@@ -309,18 +310,18 @@ import { throws } from 'assert';
 		height: 250px;
 		margin-top: 30px;
 	}
-	
+
 	.kbox1Bg img {
 		float: right;
 	}
-	
+
 	.kbox2Bg {
 		/*display: flex;
 		justify-content: center;
 		box-sizing: border-box;*/
 		text-align: center;
 	}
-	
+
 	.banner {
 		/* background: url(../../static/images/bannerBg.png); */
 		height: 700px;
@@ -331,28 +332,29 @@ import { throws } from 'assert';
 		flex-wrap: wrap;
 		background-size: cover;
 	}
-	
+
 	.bannerContent {
 		width: 100%;
 		display: flex;
 		justify-content: center;
+		padding-bottom:9rem;
 	}
-	
+
 	.banner .bannerContent img {
 		width: 594px;
 		height: 312px;
 	}
-	
+
 	.banner img {
 		width: 70px;
 		height: 70px;
 	}
-	
+
 	.kbox2Bg .box1Top {
 		display: flex;
 		justify-content: center;
 	}
-	
+
 	.kbox3Bg {
 		height: 610px;
 		/* background: url(../../static/images/box3Bg.png); */
@@ -361,14 +363,14 @@ import { throws } from 'assert';
 		box-sizing: border-box;
 		background-size: cover;
 	}
-	
+
 	.kbox3Bg .box1Top {
 		/*display: flex;
 		justify-content: center;*/
 		margin-left: 47%;
 		padding-top: 188px;
 	}
-	
+
 	.kbox3Bg p {
 		text-align: center;
 		font-size: 20px;
@@ -376,13 +378,13 @@ import { throws } from 'assert';
 		margin-top: 30px;
 		font-weight: bold;
 	}
-	
+
 	.kbox3Bg img {
 		width: 70px;
 		height: 70px;
 	}
 	/* 江海业务 */
-	
+
 	.business {
 		width: 100%;
 		height: auto;
@@ -390,19 +392,19 @@ import { throws } from 'assert';
 		background: url(../../static/images/background4.png) repeat;
 		padding-bottom: 30px;
 	}
-	
+
 	.business-container {
 		width: 76%;
 		margin: 0 12%;
 		display: flex;
 	}
-	
+
 	.business ul {
 		margin: 0 auto;
 		text-align: center;
 		display: inline-block;
 	}
-	
+
 	.business ul li {
 		float: left;
 		display: block;
@@ -414,12 +416,12 @@ import { throws } from 'assert';
 		margin-right: 10px;
 		position: relative;
 	}
-	
+
 	.business ul li:nth-child(even) {
 		background: #0446B4;
 		color: #fff;
 	}
-	
+
 	.business ul li .businessIconHover {
 		background: #4182c3;
 		box-shadow: 0 5px 9px 0 rgba(0, 83, 204, 0.30);
@@ -432,19 +434,19 @@ import { throws } from 'assert';
 	}
 	.box3OverLay{
 		 /* background:url(../../static/images/background5.png);  */
-		 padding:15px 0; 
+		 padding:15px 0;
 		 background-size: cover
 		 }
 	.business ul li .businessIconHover(even) {
 		background: #fff;
 		color : #333;
 	}
-	
+
 	.business ul li .businessIconHover img {
 		animation: pic .5s linear 0s 1 forwards;
 		-webkit-animation: pic .5s linear 0s 1 forwards;
 	}
-	
+
 	@keyframes pic {
 		from {
 			transform: translate(0px, 0px) scale(1);
@@ -457,7 +459,7 @@ import { throws } from 'assert';
 			-webkit-transform: translate(-60px, -15px) scale(1.2);
 		}
 	}
-	
+
 	@-moz-keyframes pic {
 		from {
 			transform: translate(0px, 0px) scale(1);
@@ -466,7 +468,7 @@ import { throws } from 'assert';
 			transform: translate(-60px, -15px) scale(1.2);
 		}
 	}
-	
+
 	@-webkit-keyframes pic {
 		from {
 			transform: translate(0px, 0px) scale(1);
@@ -477,7 +479,7 @@ import { throws } from 'assert';
 			-webkit-transform: translate(-60px, -15px) scale(1.2);
 		}
 	}
-	
+
 	@-o-keyframes pic {
 		from {
 			transform: translate(0px, 0px) scale(1);
@@ -486,7 +488,7 @@ import { throws } from 'assert';
 			transform: translate(-60px, -15px) scale(1.2);
 		}
 	}
-	
+
 	.business ul li .businessIconHover p {
 		font-size: 16px;
 		color: #FFFFFF;
@@ -498,7 +500,7 @@ import { throws } from 'assert';
 		animation: title .5s linear 0s 1 forwards;
 		-webkit-animation: title .5s linear 0s 1 forwards;
 	}
-	
+
 	@keyframes title {
 		from {
 			transform: translate(0px, 40px);
@@ -513,7 +515,7 @@ import { throws } from 'assert';
 			opacity: 1;
 		}
 	}
-	
+
 	@-moz-keyframes title {
 		from {
 			transform: translate(0px, 40px);
@@ -524,7 +526,7 @@ import { throws } from 'assert';
 			opacity: 1;
 		}
 	}
-	
+
 	@-webkit-keyframes title {
 		from {
 			transform: translate(0px, 40px);
@@ -537,7 +539,7 @@ import { throws } from 'assert';
 			opacity: 1;
 		}
 	}
-	
+
 	@-o-keyframes title {
 		from {
 			transform: translate(0px, 40px);
@@ -548,7 +550,7 @@ import { throws } from 'assert';
 			opacity: 1;
 		}
 	}
-	
+
 	.business ul li .businessIconHover div {
 		font-size: 12px;
 		color: #FFFFFF;
@@ -559,7 +561,7 @@ import { throws } from 'assert';
 		animation: word .5s linear 0s 1 forwards;
 		-webkit-animation: word .5s linear 0s 1 forwards;
 	}
-	
+
 	@keyframes word {
 		from {
 			transform: translate(0px, 40px);
@@ -574,7 +576,7 @@ import { throws } from 'assert';
 			opacity: 1;
 		}
 	}
-	
+
 	@-moz-keyframes word {
 		from {
 			transform: translate(0px, 40px);
@@ -585,7 +587,7 @@ import { throws } from 'assert';
 			opacity: 1;
 		}
 	}
-	
+
 	@-webkit-keyframes word {
 		from {
 			transform: translate(0px, 40px);
@@ -598,7 +600,7 @@ import { throws } from 'assert';
 			opacity: 1;
 		}
 	}
-	
+
 	@-o-keyframes word {
 		from {
 			transform: translate(0px, 40px);
@@ -609,31 +611,31 @@ import { throws } from 'assert';
 			opacity: 1;
 		}
 	}
-	
+
 	.business ul li .businessIcon img {
 		margin: 50px 0 30px;
 	}
 	/* 江海产品 */
-	
+
 	.box3Bg {
 		width: 100%;
 		height: 650px;
 		margin-bottom: -3px;
 		text-align: center;
 	}
-	
+
 	.box3Bg-container {
 		width: 66%;
 		margin: 0 17%;
 	}
-	
+
 	.box3Bg ul {
 		margin: 0 auto;
 		text-align: center;
 		display: inline-block;
 		float: left;
 	}
-	
+
 	.box3Bg ul li {
 		float: left;
 		display: block;
@@ -641,14 +643,14 @@ import { throws } from 'assert';
 		height: 200px;
 		cursor: pointer;
 	}
-	
+
 	.box3Bg ul li:hover {
 		/* background: rgba(23, 91, 177, .6); */
 		background: rgba(23, 91, 177);
 		animation: top .5s linear 0s 1 forwards;
 		-webkit-animation: top .5s linear 0s 1 forwards;
 	}
-	
+
 	@keyframes top {
 		from {
 			transform: scale(1);
@@ -661,7 +663,7 @@ import { throws } from 'assert';
 			-webkit-transform: scale(1.2);
 		}
 	}
-	
+
 	@-moz-keyframes top {
 		from {
 			transform: scale(1);
@@ -670,7 +672,7 @@ import { throws } from 'assert';
 			transform: scale(1.2);
 		}
 	}
-	
+
 	@-webkit-keyframes top {
 		from {
 			transform: scale(1);
@@ -681,7 +683,7 @@ import { throws } from 'assert';
 			-webkit-transform: scale(1.2);
 		}
 	}
-	
+
 	@-o-keyframes top {
 		from {
 			transform: scale(1);
@@ -690,17 +692,17 @@ import { throws } from 'assert';
 			transform: scale(1.2);
 		}
 	}
-	
+
 	.box3Bg-top li:nth-child(odd),
 	.box3Bg-bottom li:nth-child(even) {
 		background: rgba(0, 0, 0, .6);
 	}
-	
+
 	.box3Bg-top li:nth-child(even),
 	.box3Bg-bottom li:nth-child(odd) {
 		background: rgba(0, 0, 0, .4);
 	}
-	
+
 	.box3Bg ul li p {
 		font-size: 16px;
 		color: #FFFFFF;
@@ -708,14 +710,14 @@ import { throws } from 'assert';
 		text-align: center;
 		margin-top: 40px;
 	}
-	
+
 	.box3Bg ul li div.border {
 		width: 30px;
 		height: 2px;
 		background: #FFFFFF;
 		margin: 16px auto 20px;
 	}
-	
+
 	.box3Bg ul li img {
 		width: 70px;
 		height: 70px;
