@@ -112,7 +112,13 @@
 						</el-select>
 					</el-form-item>
 					<el-form-item prop="city" label="所在地区 ">
-						<el-input v-model="form.city" placeholder="请输入所在地区"></el-input>
+						<!-- <el-input v-model="form.city" placeholder="请输入所在地区"></el-input> -->
+						<el-cascader
+							:options="options"
+							placeholder="请输入所在地区"
+							v-model="form.city"
+							@change="handleChange">
+						</el-cascader>
 					</el-form-item>
 					<el-form-item prop="workbackground" label="工作经历 ">
 						<el-input type="textarea" v-model="form.workbackground" placeholder="请输入工作经历"></el-input>
@@ -184,7 +190,13 @@
 						<el-input v-model="form.govUnitName" placeholder="请输入单位名称"></el-input>
 					</el-form-item>
 					<el-form-item prop="govUnitAddress" label="所在地区">
-						<el-input v-model.number="form.govUnitAddress" placeholder="请输入所在地区"></el-input>
+						<!-- <el-input v-model.number="form.govUnitAddress" placeholder="请输入所在地区"></el-input> -->
+						<el-cascader
+							:options="options"
+							placeholder="请输入所在地区"
+							v-model="form.govUnitAddress"
+							@change="handleChange">
+						</el-cascader>
 					</el-form-item>
 					<el-form-item prop="Jurisdiction" label="管辖范围">
 						<el-input v-model="form.Jurisdiction" placeholder="情输入管辖范围"></el-input>
@@ -228,8 +240,14 @@
 					<el-form-item prop="email" label="邮箱">
 						<el-input v-model="form.email" placeholder="请输入邮箱"></el-input>
 					</el-form-item>
-					<el-form-item prop="tourAddress" label="所在地区">
-						<el-input v-model="form.tourAddress" placeholder="请输入所在地区"></el-input>
+					<el-form-item prop="selectedOptions" label="所在地区">
+						<!-- <el-input v-model="form.tourAddress" placeholder="请输入邮箱"></el-input> -->
+						<el-cascader
+							:options="options"
+							placeholder="请输入所在地区"
+							v-model="form.selectedOptions"
+							@change="handleChange">
+						</el-cascader>
 					</el-form-item>
 				</div>
 
@@ -860,6 +878,7 @@
 <script scope>
 import towtop from '@/components/testTop'
 import towbottom from '@/components/testBottom'
+import Map from '@/components/map'
 export default {
   data () {
     // 手机号验证
@@ -869,6 +888,8 @@ export default {
       }
     }
     return {
+      options: [],
+      // selectedOptions: [],
       RoleId: this.$route.query.roleId,
       Phone: this.$route.query.phone,
       userType: '',
@@ -894,8 +915,8 @@ export default {
       RegterInformation: false, // FA、基金管理公司、投资机构的注册联系人
       GovReginformation: false, // 政府单位注册信息
       GovRegerinformation: false, // 政府单位注册联系人
-			Tourist: false, // 游客联络信息
-			
+      Tourist: false, // 游客联络信息
+
       rules: {
         name: [{
           required: true,
@@ -995,7 +1016,7 @@ export default {
         city: [{
           required: true,
           message: '请输入所在地区',
-          trigger: 'blur'
+          trigger: 'change'
         }],
         firstBusiness: [{
           required: true,
@@ -1281,7 +1302,7 @@ export default {
         govUnitAddress: [{
           required: true,
           message: '请输入所在地区',
-          trigger: 'blur'
+          trigger: 'change'
         }],
         Jurisdiction: [{
           required: true,
@@ -1320,10 +1341,10 @@ export default {
           message: '请输入身份信息',
           trigger: 'blur'
         }],
-        tourAddress: [{
+        selectedOptions: [{
           required: true,
           message: '请输入所在地区',
-          trigger: 'blur'
+          trigger: 'change'
         }],
         vocation: [{
           required: true,
@@ -1349,6 +1370,9 @@ export default {
   },
   created () {
     this.getUserType()
+  },
+  mounted () {
+    this.options = Map.provinceList
   },
   methods: {
     getUserType () {
@@ -1784,6 +1808,10 @@ export default {
       //     title: data
       //   }
       // })
+    },
+		 handleChange (value) {
+      this.form.tourAddress = value.join('')
+      console.log(value.join(''))
     }
   }
 }
@@ -1869,6 +1897,9 @@ export default {
 </style>
 <!--页面样式-->
 <style scoped>
+.el-cascader--small{
+	line-height:43px;
+}
 	.border-bottom {
 		border-bottom: none !important;
 	}

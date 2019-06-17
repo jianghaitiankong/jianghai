@@ -23,7 +23,7 @@
 						<li><span>用户名：</span>{{phone}}</li>
 						<li><span>手机号：</span>{{phone}}</li>
 
-						<li v-if="!informationCen.collectionId"><span>用户类型：</span>未认证<input @click="certificationPop" type="button" name="Submit" value="认证" class="new_rz_btn"></li>
+						<li v-if="informationCen.collectionId"><span>用户类型：</span>未认证<input @click="certificationPop" type="button" name="Submit" value="认证" class="new_rz_btn"></li>
 						<li v-else><span>用户类型：</span>已认证</li>
 						<li><span>邮箱：</span>{{informationCen.email}}</li>
 						<li><span>真实姓名：</span>{{informationCen.name}}</li>
@@ -111,8 +111,8 @@ export default {
       pointTotail: '',
       informationCen: {},
       phone: sessionStorage.phone,
-			setItemShow: false,
-			token: sessionStorage.getItem("token"),
+      setItemShow: false,
+      token: sessionStorage.getItem('token')
     }
   },
   created () {
@@ -154,7 +154,7 @@ export default {
       }
     },
     information () {
-      this.$request.post('collection/selectCollectionByPhone', {'cellphone': sessionStorage.phone},this.token)
+      this.$request.post('collection/selectCollectionByPhone', {'cellphone': sessionStorage.phone}, this.token)
         .then(res => {
           console.log(res.data.list[0])
           this.informationCen = res.data.list[0]
@@ -165,7 +165,7 @@ export default {
     },
 
     integral () {
-      this.$request.post('user/selectPoint', {'userId': sessionStorage.getItem('UserId')},this.token)
+      this.$request.post('user/selectPoint', {'userId': sessionStorage.getItem('UserId')}, this.token)
         .then(res => {
           this.pointTotail = res.data.list[0].pointTotail
         })
