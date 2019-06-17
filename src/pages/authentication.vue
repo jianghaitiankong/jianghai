@@ -12,7 +12,7 @@
 					</div>
 					<router-link to="/index">
 						<div class="back">
-							返回首页
+							返回首页22
 						</div>
 					</router-link>
 				</div>
