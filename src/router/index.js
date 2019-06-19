@@ -1,24 +1,103 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import index from '@/pages/index'
-import about from '@/pages/about'
-import news from '@/pages/news'
-import login from '@/pages/login'
-import team from '@/pages/team'
-import contact from '@/pages/contact'
-import join from '@/pages/join'
-import register from '@/pages/register'
-import forgetPsw from '@/pages/forgetPsw'
-import changePsw from '@/pages/changePsw'
-import newsDetails from '@/pages/newsDetails'
-import business from '@/pages/business'
-import product from '@/pages/product'
-import productDetails from '@/pages/productDetails'
-import schoolfellow from '@/pages/schoolfellow'
-import personInfo from '@/pages/personInfo'
-import authentication from '@/pages/authentication'
-import video from '@/pages/video'
-import rules from '@/pages/rules'
+
+const index = resolve =>{
+	import ( '@/pages/index.vue').then(module =>{
+		resolve(module)
+	})
+}
+const about = resolve =>{
+	import ( '@/pages/about.vue').then(module =>{
+		resolve(module)
+	})
+}
+const news = resolve =>{
+	import ( '@/pages/news.vue').then(module =>{
+		resolve(module)
+	})
+}
+const login = resolve =>{
+	import ( '@/pages/login.vue').then(module =>{
+		resolve(module)
+	})
+}
+const team = resolve =>{
+	import ( '@/pages/team.vue').then(module =>{
+		resolve(module)
+	})
+}
+const contact = resolve =>{
+	import ( '@/pages/contact.vue').then(module =>{
+		resolve(module)
+	})
+}
+const join = resolve =>{
+	import ( '@/pages/join.vue').then(module =>{
+		resolve(module)
+	})
+}
+const register = resolve =>{
+	import ( '@/pages/register.vue').then(module =>{
+		resolve(module)
+	})
+}
+const forgetPsw = resolve =>{
+	import ( '@/pages/forgetPsw.vue').then(module =>{
+		resolve(module)
+	})
+}
+const changePsw = resolve =>{
+	import ( '@/pages/changePsw.vue').then(module =>{
+		resolve(module)
+	})
+}
+const newsDetails = resolve =>{
+	import ( '@/pages/newsDetails.vue').then(module =>{
+		resolve(module)
+	})
+}
+const business = resolve =>{
+	import ( '@/pages/business.vue').then(module =>{
+		resolve(module)
+	})
+}
+const product = resolve =>{
+	import ( '@/pages/product.vue').then(module =>{
+		resolve(module)
+	})
+}
+const productDetails = resolve =>{
+	import ( '@/pages/productDetails.vue').then(module =>{
+		resolve(module)
+	})
+}
+const schoolfellow = resolve =>{
+	import ( '@/pages/schoolfellow.vue').then(module =>{
+		resolve(module)
+	})
+}
+const personInfo = resolve =>{
+	import ( '@/pages/personInfo.vue').then(module =>{
+		resolve(module)
+	})
+}
+const authentication = resolve =>{
+	import ( '@/pages/authentication.vue').then(module =>{
+		resolve(module)
+	})
+}
+const video = resolve =>{
+	import ( '@/pages/video.vue').then(module =>{
+		resolve(module)
+	})
+}
+const rules = resolve =>{
+	import ( '@/pages/rules.vue').then(module =>{
+		resolve(module)
+	})
+}
+import { resolve } from 'url';
+
 Vue.use(Router)
 
 export default new Router({
