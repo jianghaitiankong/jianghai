@@ -14,14 +14,15 @@
       <!-- <el-time-select v-model="value" :picker-options="{start: '08:30', step: '00:15', end: '18:30'}" placeholder="选择时间"></el-time-select> -->
       <div class="block">
         <el-slider v-model="value" show-input></el-slider>
-        <el-button plain @click="open1">可自动关闭</el-button>
+        <!-- <el-button plain @click="open1">可自动关闭</el-button>
 
         <el-button plain @click="open1">成功</el-button>
         <el-button plain @click="open2">警告</el-button>
         <el-button plain @click="open3">消息</el-button>
-        <el-button plain @click="open4">错误</el-button>
+        <el-button plain @click="open4">错误</el-button> -->
       </div>
     </div>
+    <lineCharts></lineCharts>
     <towbottom></towbottom>
   </div>
 </template>
@@ -29,6 +30,7 @@
 <script>
 import towtop from "@/components/testTop";
 import towbottom from "@/components/testBottom";
+import lineCharts from "@/components/lineCharts";
 export default {
   data() {
     return {
@@ -47,7 +49,8 @@ export default {
   },
   components: {
     towtop,
-    towbottom
+    towbottom,
+    lineCharts
   },
   methods: {
     getAbout() {

@@ -5,6 +5,7 @@ import router from './router' //路由
 import Axios from 'axios' //AJAX
 import "babel-polyfill"; 
 import ElementUI from 'element-ui'; //element-ui
+import echarts from 'echarts'; // 
 import 'element-ui/lib/theme-chalk/index.css';
 // import $ from 'jquery'
 import request from '@/service/http'
@@ -21,6 +22,7 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = Axios
 Vue.prototype.$request = request
 Vue.prototype.$util = util
+Vue.prototype.$echarts = echarts 
 
 Vue.use(VueWechatTitle);
 Vue.use(ElementUI, {
