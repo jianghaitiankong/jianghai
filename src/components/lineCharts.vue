@@ -1,18 +1,24 @@
 <template>
-  <div id="Mycharts"></div>
+  <div id="Mycharts">
+    
+  </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      msg: "welcome to vue"
+      msg: "1"
     };
   },
+  props:[
+    'datas'
+  ],
   mounted() {
     this.drawLine();
   },
   methods: {
     drawLine() {
+      // console.log(this.datas)
       // 基于准备好的dom，初始化echarts实例
       let Mycharts = this.$echarts.init(document.getElementById("Mycharts"));
       // 绘制图表
@@ -42,7 +48,7 @@ export default {
           {
             type: "category",
             axisTick: { show: false },
-            data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+            data: this.datas.xData
           }
         ],
         series: [
@@ -55,7 +61,7 @@ export default {
                 position: "inside"
               }
             },
-            data: [200, 170, 240, 244, 200, 220, 210]
+            data: this.datas.yData1
           },
           {
             name: "收入",
@@ -66,7 +72,7 @@ export default {
                 show: true
               }
             },
-            data: [320, 302, 341, 374, 390, 450, 420]
+            data: this.datas.yData2
           },
           {
             name: "支出",
@@ -78,7 +84,7 @@ export default {
                 position: "left"
               }
             },
-            data: [-120, -132, -101, -134, -190, -230, -210]
+            data: this.datas.yData3
           }
         ]
         

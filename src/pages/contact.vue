@@ -31,6 +31,16 @@
 				</div>
 			</div>
 		</div>
+		<!-- 测试vuex -->
+		<h1>我是从页面上直接获取的值：{{this.$store.state.count}}</h1>
+		<h1>我是从getters获取的计算后的值：{{this.$store.getters.getStateCoune}}</h1>
+
+		<h1>count的值：{{this.$store.state.count}}</h1>
+		<div class="button">
+			<button @click="addFun">+</button>
+			<button @click="redFun">-</button>
+		</div>
+		
 
 		<towbottom></towbottom>
 	</div>
@@ -92,7 +102,6 @@
 							pageSize : this.pageSize
 						};
 				that.$request.post('contact/selectAllContact', data, that.token).then(res => {
-					console.log(res.data.list)
 					if(res.data.success == "查询成功"){
 						that.contactList = res.data.list;
 					}else{
@@ -102,6 +111,14 @@
 					that.$message.error(error);
 				});
 			},
+			addFun(){
+				this.$store.dispatch('addFun');
+				// this.$store.commit('add');
+			},
+			redFun(){
+				this.$store.dispatch('redFun');
+				// this.$store.commit('reduction');
+			}
 		},
 
 	}
@@ -119,4 +136,16 @@
         margin-top:80px;
         padding-bottom: 40px;
     }
+	h1{
+		text-align: center
+	}
+	button{
+		width: 40px;
+		height: 40px;
+		margin:  0 auto;
+	}
+	.button{
+		text-align: center;
+		margin: 10px;	
+	}
 </style>

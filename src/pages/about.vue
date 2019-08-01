@@ -19,10 +19,12 @@
         <el-button plain @click="open1">成功</el-button>
         <el-button plain @click="open2">警告</el-button>
         <el-button plain @click="open3">消息</el-button>
-        <el-button plain @click="open4">错误</el-button> -->
+        <el-button plain @click="open4">错误</el-button>-->
       </div>
     </div>
-    <lineCharts></lineCharts>
+    <h1>count的值：{{this.$store.state.count}}</h1>
+    <lineCharts v-bind:datas="datas"></lineCharts>
+    <com v-bind:parentMsg="msg"></com>
     <towbottom></towbottom>
   </div>
 </template>
@@ -31,6 +33,7 @@
 import towtop from "@/components/testTop";
 import towbottom from "@/components/testBottom";
 import lineCharts from "@/components/lineCharts";
+import com from "@/components/com";
 export default {
   data() {
     return {
@@ -41,16 +44,26 @@ export default {
       desc: "",
       token: sessionStorage.getItem("token"),
       radio: "1",
-      value: 0
+      value: 0,
+      msg: "父组件的值",
+      datas: {}
     };
   },
   created() {
     this.getAbout();
+    // 模拟请求数据
+    this.datas = {
+      xData: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+      yData1: [200, 170, 240, 244, 200, 220, 210],
+      yData2: [320, 302, 341, 374, 390, 450, 420],
+      yData3: [-120, -132, -101, -134, -190, -230, -210]
+    };
   },
   components: {
     towtop,
     towbottom,
-    lineCharts
+    lineCharts,
+    com
   },
   methods: {
     getAbout() {
@@ -63,6 +76,9 @@ export default {
         .catch(err => {
           console.log(error);
         });
+    },
+    show(){
+
     },
     open1() {
       this.$notify({
