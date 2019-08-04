@@ -15,7 +15,7 @@
 			<div class="new_width">
 				<div class="personal_dh">
 					<ul>
-						<li @click="tab(index)" v-for="(item,index) in personInfo" :class="{personal_dh_lion : index===curId}">{{item.name}}</li>
+						<li @click="tab(index)" v-for="(item,index) in personInfo" :class="{personal_dh_lion : index===curId}" :key='item.curId'>{{item.name}}</li>
 					</ul>
 				</div>
 				<div class="personal_main2 personal_1" v-show=' curId === 0'>

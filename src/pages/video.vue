@@ -9,7 +9,7 @@
 				</div>
 			</div>
 			<div class="video-content">
-				<div class="video-list" v-for="item in videoList">
+				<div class="video-list" v-for="item in videoList" :key='item.mediaId'>
 					<!-- <img :src="item.image"/> -->
 					<video :src="item.filePath" controls="controls" style="width:300px;height:214px">
 					</video>
@@ -57,7 +57,6 @@
 					pageSize : that.pageSize
 				}
 				that.$request.post("media/query",data,that.token).then(function(result){
-					console.log(result) 
 					if(result.data.success == "媒体查询成功"){
 						that.videoList = result.data.list
 						console.log(that.adminList,'赋值之后的that.adminList')

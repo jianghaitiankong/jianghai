@@ -18,12 +18,12 @@
 			<div class="onepageBox">
 				<div class="contact">
 					<ul class="conItem list-unstyled">
-						<li class="wow fadeInUp animated" v-for="item in contactList">
+						<li class="wow fadeInUp animated" v-for="(item,inx) in contactList" :key='item.contactId'>
 							<div class="conImg"><img :src="item.icon" class="img-circle img-responsive"></div>
 							<div class="conText wow fadeInLeft animated">
-								<h3 class="conName">{{item.contactHQ}}</h3>
-								<h3 class="conName">{{item.contactAddress}}</h3>
-								<p>联系人：{{item.contactUser}}<br>电  话 ：{{item.contactPhone}}</p>
+								<h3 class="conName">{{inx}} --- {{item.contactHQ}}</h3>
+								<h3 class="conName">{{inx}} --- {{item.contactAddress}}</h3>
+								<p>{{inx}} --- 联系人：{{item.contactUser}}<br>{{inx}} --- 电  话 ：{{item.contactPhone}}</p>
 							</div>
 						</li>
 
@@ -31,6 +31,21 @@
 				</div>
 			</div>
 		</div>
+		<div>
+			<label>contactHQ
+				<input type="text" v-model="contactHQ">
+			</label>
+			<label>contactAddress
+				<input type="text" v-model="contactAddress">
+			</label>
+			<label>contactUser
+				<input type="text" v-model="contactUser">
+			</label>
+			<label>contactPhone
+				<input type="text" v-model="contactPhone">
+			</label>
+		</div>
+		<button @click='add'> 添加 联系人</button>
 		<!-- 测试vuex -->
 		<h1>我是从页面上直接获取的值：{{this.$store.state.count}}</h1>
 		<h1>我是从getters获取的计算后的值：{{this.$store.getters.getStateCoune}}</h1>
@@ -84,6 +99,10 @@
 				// }]
 				contactList : [],
 				token: sessionStorage.getItem("token"),
+				contactHQ:'',
+				contactAddress:'',
+				contactUser:'',
+				contactPhone:'',
 			}
 
 		},
@@ -104,6 +123,7 @@
 				that.$request.post('contact/selectAllContact', data, that.token).then(res => {
 					if(res.data.success == "查询成功"){
 						that.contactList = res.data.list;
+						console.log(that.contactList)
 					}else{
 						that.$message.error(res.data.error);
 					}
@@ -118,6 +138,9 @@
 			redFun(){
 				this.$store.dispatch('redFun');
 				// this.$store.commit('reduction');
+			},
+			add(){
+				this.contactList.push({contactHQ:this.contactHQ,contactAddress:this.contactAddress,contactUser:this.contactUser,contactPhone:this.contactPhone })
 			}
 		},
 

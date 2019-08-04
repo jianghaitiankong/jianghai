@@ -9,7 +9,7 @@
 				</div>
 			</div>
 			<ul class="productList clearfix">
-				<li v-for="(item,index) in productList" @click="skip(item,index)">
+				<li v-for="(item,index) in productList" @click="skip(item,index)" :key='item.productId'>
 					<div class="listIndex">
 						<span>{{index+1}}</span>
 					</div>

@@ -8,7 +8,7 @@
 			</div>
 		</div>
 		<div class="member clearfix">
-			<div class="memberList" v-for="(item,index) in teamList" @mouseenter="onMouseOver(index)" @mouseleave="onMouseLeave(index)">
+			<div class="memberList" v-for="(item,index) in teamList" @mouseenter="onMouseOver(index)" @mouseleave="onMouseLeave(index)" :key='item.teamPId'>
 				<div class="memberImg">
 					<img :src="item.imgSrc" alt="">
 				</div>

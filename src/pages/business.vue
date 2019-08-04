@@ -13,11 +13,11 @@
 				<p>{{content}}</p>
 			</div>
 			<ul class="fenlei list-unstyled text-center list-inline fadeInUp animated">
-				<li @click="tab(index,item)" v-for="(item,index) in businessList">
+				<li @click="tab(index,item)" v-for="(item,index) in businessList" :key='item.curId'>
 					<a :class="{active : index===curId}" class="m2menu_a">{{item.businessTitle}}</a>
 				</li>
 			</ul>
-			<div v-show="index===curId" v-for="(content, index) in businessList">
+			<div v-show="index===curId" v-for="(content, index) in businessList" :key='content.curId'>
 				<div class="flexCenter">
 					<div class="title fadeInUp animated">
 						<h3>{{content.businessTitle}}</h3>

@@ -59,7 +59,7 @@
 			</div>
 			<div class="business-container">
 				<ul>
-					<li @click="BusJumpLink(index)" @mouseenter="onMouseOver(index)" @mouseleave="onMouseLeave(index)" v-for="(item,index)  in businessList">
+					<li @click="BusJumpLink(index)" @mouseenter="onMouseOver(index)" @mouseleave="onMouseLeave(index)" v-for="(item,index)  in businessList" :key='item.HoverIndex'>
 						<div class="businessIcon">
 							<img :src="item.businessImg" alt="">
 							<p>{{item.business}}</p>
@@ -85,7 +85,7 @@
 					<div class="box3Item wow fadeInUp">
 						<div class="box3Bg-container">
 							<ul class="box3Bg-top">
-								<li @click="ProJumpLink(index)" v-for="(item,index)  in productList">
+								<li @click="ProJumpLink(index)" v-for="(item,index)  in productList" :key='item.product'>
 									<p>{{item.product}}</p>
 									<div class="border"></div>
 									<img :src="item.productImg">

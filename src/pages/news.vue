@@ -15,7 +15,7 @@
 			<div class="container" id="add">
 				<div class="onepageBox">
 					<ul class="artlist list-unstyled">
-						<li @click="NewsJumpLink(index)" class="fadeInUp animated hoverBg" v-for="(item,index) in NewsList">
+						<li @click="NewsJumpLink(index)" class="fadeInUp animated hoverBg" v-for="(item,index) in NewsList" :key='item.articleTitle'>
 							<a href="javascript:;" target="_blank">
 								<h3 class="arTit">{{item.articleTitle}}</h3>
 								<span class="arTime">{{item.updateTime}}</span>
@@ -69,7 +69,6 @@
 				//				console.log(innerHeight + " " + outerHeight + " " + scrollTop);
 				if(innerHeight < (outerHeight + scrollTop)) {
 					//加载更多操作
-					console.log("loadmore");
 					var that = this;
 					var NewsListbefore = that.NewsList;
 					that.currentPage += 1;
@@ -93,7 +92,6 @@
 					'pageSize': 100,
 				}
 				this.$request.post('news/selectAllNews', data, that.token).then(res => {
-					console.log(res.data.list)
 					that.NewsList = res.data.list;
 				}).catch(err => {
 					console.log(error)
@@ -104,7 +102,6 @@
 				var that = this;
 				var str = that.NewsList[index].updateTime
 				that.time = str.substr(0, 10)
-				console.log(that.time)
 				that.$router.push({
 					path: '/newsDetails',
 					query: {

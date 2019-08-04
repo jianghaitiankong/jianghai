@@ -23,8 +23,9 @@
       </div>
     </div>
     <h1>count的值：{{this.$store.state.count}}</h1>
-    <lineCharts v-bind:datas="datas"></lineCharts>
-    <com v-bind:parentMsg="msg"></com>
+    <lineCharts :datas="datas"></lineCharts>
+    <com :parentMsg="msg" @func="show"></com>
+    <h2>{{msgfromson}}</h2>
     <towbottom></towbottom>
   </div>
 </template>
@@ -46,7 +47,8 @@ export default {
       radio: "1",
       value: 0,
       msg: "父组件的值",
-      datas: {}
+      datas: {},
+      msgfromson :''
     };
   },
   created() {
@@ -77,8 +79,8 @@ export default {
           console.log(error);
         });
     },
-    show(){
-
+    show(data){
+      this.msgfromson = data 
     },
     open1() {
       this.$notify({
