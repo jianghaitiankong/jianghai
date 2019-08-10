@@ -26,6 +26,9 @@
     <lineCharts :datas="datas"></lineCharts>
     <com :parentMsg="msg" @func="show"></com>
     <h2>{{msgfromson}}</h2>
+    <input type="text" name="" id="" v-model="firstName"> + 
+    <input type="text" name="" id="" v-model="lastName"> = 
+    <input type="text" name="" id="" v-model="fullName">
     <towbottom></towbottom>
   </div>
 </template>
@@ -48,11 +51,16 @@ export default {
       value: 0,
       msg: "父组件的值",
       datas: {},
-      msgfromson :''
+      msgfromson :'',
+      firstName:'',
+      lastName:'',
+      fullName:'',
     };
   },
   created() {
     this.getAbout();
+    console.log(this.$route)
+    
     // 模拟请求数据
     this.datas = {
       xData: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
@@ -67,6 +75,22 @@ export default {
     lineCharts,
     com
   },
+  watch:{
+    firstName:function(newVal){
+      this.fullName = newVal + '---' +this.lastName
+    },
+    lastName:function(newVal){
+      this.fullName = this.firstName + '---' + newVal 
+    },
+    routerPath:function(){
+      console.log(this.$route)
+    },
+  },
+  computed: {
+    SourceID(){
+        return this.$route.query.source_id;
+    },
+  },
   methods: {
     getAbout() {
       var about = {};
@@ -76,6 +100,7 @@ export default {
           this.desc = res.data.list[0].aboutUs;
         })
         .catch(err => {
+          this.open3()
           console.log(error);
         });
     },
@@ -101,11 +126,11 @@ export default {
     open3() {
       this.$notify.info({
         title: "消息",
-        message: "这是一条消息的提示消息"
+        message: "请检查您的网络"
       });
     },
 
-    oopen4() {
+    open4() {
       this.$notify.error({
         title: "错误",
         message: "这是一条错误的提示消息"

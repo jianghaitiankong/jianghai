@@ -58,7 +58,7 @@
             <div>
               <div style="width:70%;float:left">
                 <label class="checkbox" for="server">
-                  <input type="checkbox" id="server" checked="true">
+                  <input type="checkbox" id="server" :checked="true"  v-model="server" @change="servers">
                   我已阅读并完全接受
                   <router-link
                     to="/rules"
@@ -97,10 +97,13 @@ export default {
       successMsg: "", //成功的提示
       waringMsg: "", //警告的提示
       Message: "", //普通的提示
-      errorMsg: "" //错误的提示
+      errorMsg: "" ,//错误的提示
+      server:"",
     };
   },
-  created() {},
+  created() {
+    console.log(this.server)
+  },
   components: {
     towtop,
     towbottom
@@ -193,8 +196,9 @@ export default {
         mySelf.rememberPassword = true;
       }
     },
-    
-
+    servers(){
+      console.log(this.server)
+    },
     open1() {
       this.$notify({
         title: "成功",
