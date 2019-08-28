@@ -1,6 +1,7 @@
 <template>
 	<div class="contactUs">
 		<towtop></towtop>
+		
 		<div class="serviceBox">
 			<div class="container">
 				<!-- <div class="box1Top fadeInUp animated">
@@ -45,6 +46,22 @@
 				<input type="text" v-model="contactPhone">
 			</label>
 		</div>
+		<div>
+			<el-radio-group v-model="radio1">
+			<el-radio-button label="上海"></el-radio-button>
+			<el-radio-button label="北京"></el-radio-button>
+			<el-radio-button label="广州"></el-radio-button>
+			<el-radio-button label="深圳"></el-radio-button>
+			</el-radio-group>
+		</div>
+		<el-row>
+			<el-button>默认按钮</el-button>
+			<el-button type="primary">主要按钮</el-button>
+			<el-button type="success">成功按钮</el-button>
+			<el-button type="info">信息按钮</el-button>
+			<el-button type="warning">警告按钮</el-button>
+			<el-button type="danger">危险按钮</el-button>
+		</el-row>
 		<button @click='add'> 添加 联系人</button>
 		<!-- 测试vuex -->
 		<h1>我是从页面上直接获取的值：{{this.$store.state.count}}</h1>
@@ -72,6 +89,10 @@
 				businessTitle : '联系我们',
 				businessTitleEng :'Contact Us',
 				headerBg: 'headerBg',
+				radio1: '上海',
+				radio2: '北京',
+				radio3: '上海',
+				radio4: '上海',
 				// contactList: [{
 				// 	imgSrc:'../../static/images/beijing.png',
 				// 	city: '北京基地',

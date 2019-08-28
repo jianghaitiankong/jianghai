@@ -38,6 +38,7 @@ import towtop from "@/components/testTop";
 import towbottom from "@/components/testBottom";
 import lineCharts from "@/components/lineCharts";
 import com from "@/components/com";
+import { constants } from 'fs';
 export default {
   data() {
     return {
@@ -49,7 +50,7 @@ export default {
       token: sessionStorage.getItem("token"),
       radio: "1",
       value: 0,
-      msg: "父组件的值",
+      msg: "父组件的值111",
       datas: {},
       msgfromson :'',
       firstName:'',
@@ -58,6 +59,8 @@ export default {
     };
   },
   created() {
+    console.log(this)
+    console.log(this.$children)
     this.getAbout();
     console.log(this.$route)
     
@@ -77,6 +80,7 @@ export default {
   },
   watch:{
     firstName:function(newVal){
+      console.log(this.getAbout)
       this.fullName = newVal + '---' +this.lastName
     },
     lastName:function(newVal){

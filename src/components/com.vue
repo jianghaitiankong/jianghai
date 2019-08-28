@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>子组件</p>
-    <p>{{parentMsg}}</p>
+    <p>{{parentMsg}}  ：子组建</p>
     <input v-model="sonMsg" type="text">
     <button @click="myClick">  子组件的方法 </button>
   </div>
@@ -17,13 +17,11 @@ export default {
   methods:{
     myClick(){
       this.$emit('func',this.sonMsg)
-      // console.log('ok')
     }
   },
   props:[
       'parentMsg'
   ],
-  // $emit('func')
 };
 </script>
 <style scoped>
