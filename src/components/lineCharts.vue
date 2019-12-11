@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     drawLine() {
-      // console.log(this.datas)
+      
       // 基于准备好的dom，初始化echarts实例
       let Mycharts = this.$echarts.init(document.getElementById("Mycharts"));
       // 绘制图表

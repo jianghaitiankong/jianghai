@@ -17,15 +17,15 @@ const store = new Vuex.Store({
         add(state) {
             state.count = state.count + 10;
         },
-        reduction(state){
+        reduction(state) {
             state.count = state.count - 10;
         }
     },
-    actions:{
-        addFun(context){
+    actions: {
+        addFun(context) {
             context.commit('add')
         },
-        redFun(context){
+        redFun(context) {
             context.commit('reduction')
         }
     }

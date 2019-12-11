@@ -1,7 +1,7 @@
-import Vue from 'vue'
+// import Vue from 'vue';
 import axios from 'axios'
 
-//有的请求需要用户认证，视情况而定
+// 有的请求需要用户认证，视情况而定
 const getConfig = function (auth) {
   let config = {}
   if (auth) {
@@ -12,8 +12,7 @@ const getConfig = function (auth) {
   return config
 }
 // const commonUrl = 'http://192.168.0.163:7005/officialWeb-service/' // 测试环境
-const commonUrl = 'http://47.105.89.34:7005/officialWeb-service/'; // 生产环境
-
+const commonUrl = 'http://47.105.89.34:7005/officialWeb-service/' // 生产环境
 
 var request = {
   get: function (url) {
@@ -48,7 +47,7 @@ var request = {
     return axios.put(url, data, getConfig(auth))
       .then(function (res) {
         success(res)
-			})
+      })
       .catch(function (error) {
         return error
         // this.$message.error('亲，网络错误请刷新页面');

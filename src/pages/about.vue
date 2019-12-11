@@ -59,10 +59,7 @@ export default {
     };
   },
   created() {
-    console.log(this)
-    console.log(this.$children)
     this.getAbout();
-    console.log(this.$route)
     
     // 模拟请求数据
     this.datas = {
@@ -80,14 +77,13 @@ export default {
   },
   watch:{
     firstName:function(newVal){
-      console.log(this.getAbout)
       this.fullName = newVal + '---' +this.lastName
     },
     lastName:function(newVal){
       this.fullName = this.firstName + '---' + newVal 
     },
     routerPath:function(){
-      console.log(this.$route)
+      // console.log(this.$route)
     },
   },
   computed: {
@@ -105,7 +101,6 @@ export default {
         })
         .catch(err => {
           this.open3()
-          console.log(error);
         });
     },
     show(data){
