@@ -1,3 +1,4 @@
+/* eslint-disable handle-callback-err */
 <template>
   <div class="about">
     <towtop></towtop>
@@ -24,50 +25,50 @@
     </div>
     <h1>count的值：{{this.$store.state.count}}</h1>
     <lineCharts :datas="datas"></lineCharts>
+    <!-- 父组件 -->
     <com :parentMsg="msg" @func="show"></com>
     <h2>{{msgfromson}}</h2>
-    <input type="text" name="" id="" v-model="firstName"> + 
-    <input type="text" name="" id="" v-model="lastName"> = 
+    <input type="text" name="" id="" v-model="firstName"> +
+    <input type="text" name="" id="" v-model="lastName"> =
     <input type="text" name="" id="" v-model="fullName">
     <towbottom></towbottom>
   </div>
 </template>
 
 <script>
-import towtop from "@/components/testTop";
-import towbottom from "@/components/testBottom";
-import lineCharts from "@/components/lineCharts";
-import com from "@/components/com";
-import { constants } from 'fs';
+import towtop from '@/components/testTop'
+import towbottom from '@/components/testBottom'
+import lineCharts from '@/components/lineCharts'
+import com from '@/components/com'
 export default {
-  data() {
+  data () {
     return {
-      businessTitle: "此刻相识",
-      businessTitleEng: "About Us",
-      headerBg: "headerBg",
-      imgUrl: "../../static/images/logo.png",
-      desc: "",
-      token: sessionStorage.getItem("token"),
-      radio: "1",
+      businessTitle: '此刻相识',
+      businessTitleEng: 'About Us',
+      headerBg: 'headerBg',
+      imgUrl: '../../static/images/logo.png',
+      desc: '',
+      token: sessionStorage.getItem('token'),
+      radio: '1',
       value: 0,
-      msg: "父组件的值111",
+      msg: '父组件的值111',
       datas: {},
-      msgfromson :'',
-      firstName:'',
-      lastName:'',
-      fullName:'',
-    };
+      msgfromson: '',
+      firstName: '',
+      lastName: '',
+      fullName: ''
+    }
   },
-  created() {
-    this.getAbout();
-    
+  created () {
+    this.getAbout()
+
     // 模拟请求数据
     this.datas = {
-      xData: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+      xData: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
       yData1: [200, 170, 240, 244, 200, 220, 210],
       yData2: [320, 302, 341, 374, 390, 450, 420],
       yData3: [-120, -132, -101, -134, -190, -230, -210]
-    };
+    }
   },
   components: {
     towtop,
@@ -75,68 +76,68 @@ export default {
     lineCharts,
     com
   },
-  watch:{
-    firstName:function(newVal){
-      this.fullName = newVal + '---' +this.lastName
+  watch: {
+    firstName: function (newVal) {
+      this.fullName = newVal + '---' + this.lastName
     },
-    lastName:function(newVal){
-      this.fullName = this.firstName + '---' + newVal 
+    lastName: function (newVal) {
+      this.fullName = this.firstName + '---' + newVal
     },
-    routerPath:function(){
+    routerPath: function () {
       // console.log(this.$route)
-    },
+    }
   },
   computed: {
-    SourceID(){
-        return this.$route.query.source_id;
-    },
+    SourceID () {
+      return this.$route.query.source_id
+    }
   },
   methods: {
-    getAbout() {
-      var about = {};
+    getAbout () {
+      var about = {}
       this.$request
-        .post("aboutMe/selectAboutUs", about, this.token)
+        .post('aboutMe/selectAboutUs', about, this.token)
         .then(res => {
-          this.desc = res.data.list[0].aboutUs;
-        })
-        .catch(err => {
+          this.desc = res.data.list[0].aboutUs
+        // eslint-disable-next-line handle-callback-err
+        }).catch(err => {
           this.open3()
-        });
+        })
     },
-    show(data){
-      this.msgfromson = data 
+    show (data) {
+      this.msgfromson = data
     },
-    open1() {
+    open1 () {
       this.$notify({
-        title: "成功",
-        message: "这是一条成功的提示消息",
-        type: "success"
-      });
+        title: '成功',
+        message: '这是一条成功的提示消息',
+        type: 'success'
+      })
     },
 
-    open2() {
+    open2 () {
       this.$notify({
-        title: "警告",
-        message: "这是一条警告的提示消息",
-        type: "warning"
-      });
+        title: '警告',
+        message: '这是一条警告的提示消息',
+        type: 'warning'
+      })
     },
 
-    open3() {
+    open3 () {
       this.$notify.info({
-        title: "消息",
-        message: "请检查您的网络"
-      });
+        title: '消息',
+        message: '请检查您的网络'
+      })
     },
 
-    open4() {
+    open4 () {
       this.$notify.error({
-        title: "错误",
-        message: "这是一条错误的提示消息"
-      });
+        title: '错误',
+        message: '这是一条错误的提示消息'
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -151,8 +152,8 @@ export default {
   margin-bottom: 100px;
   padding-top: 40px;
   display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 .kbox1Bg p {
   text-indent: 2em;

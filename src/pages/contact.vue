@@ -1,7 +1,7 @@
 <template>
 	<div class="contactUs">
 		<towtop></towtop>
-		
+
 		<div class="serviceBox">
 			<div class="container">
 				<!-- <div class="box1Top fadeInUp animated">
@@ -72,100 +72,98 @@
 			<button @click="addFun">+</button>
 			<button @click="redFun">-</button>
 		</div>
-		
 
 		<towbottom></towbottom>
 	</div>
 </template>
 
 <script>
-	import towtop from '@/components/testTop'
-	import towbottom from '@/components/testBottom'
-	export default {
-		data() {
-			return {
-				currentPage :1,
-				pageSize : 10,
-				businessTitle : '联系我们',
-				businessTitleEng :'Contact Us',
-				headerBg: 'headerBg',
-				radio1: '上海',
-				radio2: '北京',
-				radio3: '上海',
-				radio4: '上海',
-				// contactList: [{
-				// 	imgSrc:'../../static/images/beijing.png',
-				// 	city: '北京基地',
-				// 	address: '北京市西城区中海凯旋五号楼五单元9B',
-				// 	linkman: '王女士',
-				// 	telephone: 18716816741
-				// }, {
-				// 	imgSrc:'../../static/images/shenzhen.png',
-				// 	city: '深圳基地',
-				// 	address: '深圳市福田区泰然八路广华大厦7F',
-				// 	linkman: '周女士',
-				// 	telephone: 13043466829
-				// }, {
-				// 	imgSrc:'../../static/images/shanghai.png',
-				// 	city: '上海基地',
-				// 	address: '上海市闵行区申滨南路1156号A栋8层822室',
-				// 	linkman: '莫女士',
-				// 	telephone: 18317068725
-				// }, {
-				// 	imgSrc:'../../static/images/nantong.png',
-				// 	city: '南通基地',
-				// 	address: '江苏省南通市崇川区南通壹城天外望沙龙',
-				// 	linkman: '任女士',
-				// 	telephone: 18888051305
-				// }]
-				contactList : [],
-				token: sessionStorage.getItem("token"),
-				contactHQ:'',
-				contactAddress:'',
-				contactUser:'',
-				contactPhone:'',
-			}
+import towtop from '@/components/testTop'
+import towbottom from '@/components/testBottom'
+export default {
+  data () {
+    return {
+      currentPage: 1,
+      pageSize: 10,
+      businessTitle: '联系我们',
+      businessTitleEng: 'Contact Us',
+      headerBg: 'headerBg',
+      radio1: '上海',
+      radio2: '北京',
+      radio3: '上海',
+      radio4: '上海',
+      // contactList: [{
+      // 	imgSrc:'../../static/images/beijing.png',
+      // 	city: '北京基地',
+      // 	address: '北京市西城区中海凯旋五号楼五单元9B',
+      // 	linkman: '王女士',
+      // 	telephone: 18716816741
+      // }, {
+      // 	imgSrc:'../../static/images/shenzhen.png',
+      // 	city: '深圳基地',
+      // 	address: '深圳市福田区泰然八路广华大厦7F',
+      // 	linkman: '周女士',
+      // 	telephone: 13043466829
+      // }, {
+      // 	imgSrc:'../../static/images/shanghai.png',
+      // 	city: '上海基地',
+      // 	address: '上海市闵行区申滨南路1156号A栋8层822室',
+      // 	linkman: '莫女士',
+      // 	telephone: 18317068725
+      // }, {
+      // 	imgSrc:'../../static/images/nantong.png',
+      // 	city: '南通基地',
+      // 	address: '江苏省南通市崇川区南通壹城天外望沙龙',
+      // 	linkman: '任女士',
+      // 	telephone: 18888051305
+      // }]
+      contactList: [],
+      token: sessionStorage.getItem('token'),
+      contactHQ: '',
+      contactAddress: '',
+      contactUser: '',
+      contactPhone: ''
+    }
+  },
+  created () {
+    this.getData()
+  },
+  components: {
+    towtop,
+    towbottom
+  },
+  methods: {
+    getData () {
+      let that = this
+      var data = {
+        curPage: this.currentPage,
+        pageSize: this.pageSize
+      }
+      that.$request.post('contact/selectAllContact', data, that.token).then(res => {
+        if (res.data.success === '查询成功') {
+          that.contactList = res.data.list
+          console.log(that.contactList)
+        } else {
+          that.$message.error(res.data.error)
+        }
+      }).catch(err => {
+        that.$message.error(err)
+      })
+    },
+    addFun () {
+      this.$store.dispatch('addFun')
+      // this.$store.commit('add');
+    },
+    redFun () {
+      this.$store.dispatch('redFun')
+      // this.$store.commit('reduction');
+    },
+    add () {
+      this.contactList.push({ contactHQ: this.contactHQ, contactAddress: this.contactAddress, contactUser: this.contactUser, contactPhone: this.contactPhone })
+    }
+  }
 
-		},
-		created() {
-			this.getData();
-		},
-		components: {
-			towtop,
-			towbottom
-		},
-		methods: {
-			getData() {
-				let that = this
-				var data = {
-							curPage : this.currentPage,
-							pageSize : this.pageSize
-						};
-				that.$request.post('contact/selectAllContact', data, that.token).then(res => {
-					if(res.data.success == "查询成功"){
-						that.contactList = res.data.list;
-						console.log(that.contactList)
-					}else{
-						that.$message.error(res.data.error);
-					}
-				}).catch(err => {
-					that.$message.error(error);
-				});
-			},
-			addFun(){
-				this.$store.dispatch('addFun');
-				// this.$store.commit('add');
-			},
-			redFun(){
-				this.$store.dispatch('redFun');
-				// this.$store.commit('reduction');
-			},
-			add(){
-				this.contactList.push({contactHQ:this.contactHQ,contactAddress:this.contactAddress,contactUser:this.contactUser,contactPhone:this.contactPhone })
-			}
-		},
-
-	}
+}
 </script>
 
 <style scoped>
@@ -190,6 +188,6 @@
 	}
 	.button{
 		text-align: center;
-		margin: 10px;	
+		margin: 10px;
 	}
 </style>
